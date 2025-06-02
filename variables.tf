@@ -1,0 +1,62 @@
+variable "repository_names" {
+  type        = set(string)
+  description = "The names of the repositories"
+}
+
+variable "name_prefix" {
+  description = "The prefix for the resource names"
+}
+
+variable "log_retention_days" {
+  type        = number
+  description = "Number of days to retain cluster logs"
+}
+
+variable "stopped_events_queue_arn" {
+  type        = string
+  description = "The ARN of the queue that stopped events should be sent to"
+}
+
+variable "logs_bucket_name" {
+  type        = string
+  description = "The name of the bucket for S3 logs"
+}
+
+variable "logs_bucket_arn" {
+  type        = string
+  description = "The ARN of the bucket for S3 logs"
+}
+
+variable "vpc_cidr_block" {
+  type        = string
+  description = "The CIDR block for the components VPC"
+}
+
+variable "private_subnet_cidr_blocks" {
+  type        = map(string)
+  description = "The CIDR blocks to use for the private subnets"
+}
+
+variable "allowed_instance_types" {
+  type = set(string)
+  default = [
+    "ml.m5.large",
+    "ml.m5.xlarge",
+    "ml.m5.2xlarge",
+    "ml.m5.4xlarge",
+    "ml.g4dn.xlarge",
+    "ml.g4dn.2xlarge",
+    "ml.g4dn.4xlarge",
+    "ml.p3.2xlarge",
+    "ml.g5.xlarge",
+    "ml.g5.2xlarge",
+    "ml.p2.xlarge",
+  ]
+  description = "The instance types allowed for the training jobs"
+}
+
+variable "maximum_runtime_seconds" {
+  type        = number
+  default     = 12 * 60 * 60
+  description = "The maximum timeout for the training jobs"
+}
