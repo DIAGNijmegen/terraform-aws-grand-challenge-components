@@ -47,7 +47,7 @@ resource "aws_default_network_acl" "this" {
 }
 
 resource "aws_route_table" "private" {
-  for_each = var.private_subnet_cidr_blocks
+  for_each = local.private_subnet_cidr_blocks
 
   vpc_id = aws_vpc.this.id
 
@@ -57,7 +57,7 @@ resource "aws_route_table" "private" {
 }
 
 resource "aws_subnet" "private" {
-  for_each = var.private_subnet_cidr_blocks
+  for_each = local.private_subnet_cidr_blocks
 
   vpc_id     = aws_vpc.this.id
   cidr_block = each.value
@@ -70,14 +70,14 @@ resource "aws_subnet" "private" {
 }
 
 resource "aws_route_table_association" "private" {
-  for_each = var.private_subnet_cidr_blocks
+  for_each = local.private_subnet_cidr_blocks
 
   subnet_id      = aws_subnet.private[each.key].id
   route_table_id = aws_route_table.private[each.key].id
 }
 
 resource "aws_network_acl" "private" {
-  for_each = var.private_subnet_cidr_blocks
+  for_each = local.private_subnet_cidr_blocks
 
   vpc_id     = aws_vpc.this.id
   subnet_ids = [aws_subnet.private[each.key].id]

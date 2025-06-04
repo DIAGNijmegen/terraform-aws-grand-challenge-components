@@ -1,5 +1,10 @@
 variable "repository_names" {
   type        = set(string)
+  default     = [
+    "algorithms/algorithmimage",
+    "evaluation/method",
+    "workstations/workstationimage",
+  ]
   description = "The names of the repositories"
 }
 
@@ -29,12 +34,8 @@ variable "logs_bucket_arn" {
 
 variable "vpc_cidr_block" {
   type        = string
+  default     = "172.31.0.0/16"
   description = "The CIDR block for the components VPC"
-}
-
-variable "private_subnet_cidr_blocks" {
-  type        = map(string)
-  description = "The CIDR blocks to use for the private subnets"
 }
 
 variable "allowed_instance_types" {
