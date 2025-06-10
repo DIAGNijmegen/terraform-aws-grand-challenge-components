@@ -267,8 +267,9 @@ data "aws_iam_policy_document" "schedule" {
   }
 
   statement {
-    sid = "StopSageMakerJobs"
+    sid = "ReadStopSageMakerJobs"
     actions = [
+      "sagemaker:DescribeTrainingJob",
       "sagemaker:StopTrainingJob",
     ]
     resources = [
