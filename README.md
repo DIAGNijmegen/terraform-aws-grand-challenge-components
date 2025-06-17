@@ -3,6 +3,10 @@
 This module creates the AWS resources for the components runtime environment for Grand Challenge.
 This integrates with the components module of the [Grand Challenge Django Backend](https://github.com/comic/grand-challenge.org).
 
+## Open Tofu
+
+This module is available in the [Open Tofu Registry](https://search.opentofu.org/module/diagnijmegen/grand-challenge-components/aws/latest).
+
 ## Architecture
 
 Around 50 resources are created, the diagram below shows some of the main features created by this module.
