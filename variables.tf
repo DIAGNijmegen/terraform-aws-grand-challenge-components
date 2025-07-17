@@ -52,6 +52,7 @@ variable "allowed_instance_types" {
     "ml.g5.xlarge",
     "ml.g5.2xlarge",
     "ml.p2.xlarge",
+    "ml.m7i.large",
     "ml.r7i.large",
     "ml.r7i.xlarge",
     "ml.r7i.2xlarge",
