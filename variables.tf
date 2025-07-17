@@ -58,6 +58,6 @@ variable "allowed_instance_types" {
 
 variable "maximum_runtime_seconds" {
   type        = number
-  default     = 12 * 60 * 60
+  default     = 24 * 60 * 60
   description = "The maximum timeout for the training jobs"
 }
