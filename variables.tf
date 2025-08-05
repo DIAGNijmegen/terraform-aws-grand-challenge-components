@@ -41,10 +41,6 @@ variable "vpc_cidr_block" {
 variable "allowed_instance_types" {
   type = set(string)
   default = [
-    "ml.m5.large",
-    "ml.m5.xlarge",
-    "ml.m5.2xlarge",
-    "ml.m5.4xlarge",
     "ml.g4dn.xlarge",
     "ml.g4dn.2xlarge",
     "ml.g4dn.4xlarge",
