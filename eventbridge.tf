@@ -71,10 +71,7 @@ resource "aws_cloudwatch_event_target" "stopped_training_jobs_sqs" {
     }
     input_template = <<EOF
 {
-  "id": <id>,
-  "content-encoding": "utf-8",
-  "content-type": "application/json",
-  "task": "grandchallenge.components.tasks.handle_event",
+  "task_name": "grandchallenge.components.tasks.handle_event",
   "kwargs": {
     "event": <event>,
     "backend": "grandchallenge.components.backends.amazon_sagemaker_training.AmazonSageMakerTrainingExecutor"
