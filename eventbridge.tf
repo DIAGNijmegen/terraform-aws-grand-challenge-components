@@ -66,7 +66,6 @@ resource "aws_cloudwatch_event_target" "stopped_training_jobs_sqs" {
 
   input_transformer {
     input_paths = {
-      id    = "$.id"
       event = "$.detail"
     }
     input_template = <<EOF
