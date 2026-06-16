@@ -145,7 +145,7 @@ data "aws_iam_policy_document" "execution" {
     resources = flatten([
       [for s in aws_subnet.private : s.arn],
       aws_security_group.execution.arn,
-      "arn:aws:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "arn:aws:ec2:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:network-interface/*",
     ])
   }
 
@@ -157,7 +157,7 @@ data "aws_iam_policy_document" "execution" {
     resources = [
       # Allows deleting any network interface but this is safe
       # as there is no EC2 endpoint in the VPC
-      "arn:aws:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "arn:aws:ec2:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:network-interface/*",
     ]
   }
 
@@ -168,7 +168,7 @@ data "aws_iam_policy_document" "execution" {
       "ec2:DeleteNetworkInterfacePermission",
     ]
     resources = [
-      "arn:aws:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "arn:aws:ec2:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:network-interface/*",
     ]
     condition {
       test     = "StringEquals"
@@ -196,8 +196,8 @@ data "aws_iam_policy_document" "schedule" {
       "logs:GetLogEvents",
     ]
     resources = [
-      "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:${local.training_jobs_log_group_name}:log-stream:",
-      "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:${local.training_jobs_log_group_name}:log-stream:${var.name_prefix}-*",
+      "arn:aws:logs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:log-group:${local.training_jobs_log_group_name}:log-stream:",
+      "arn:aws:logs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:log-group:${local.training_jobs_log_group_name}:log-stream:${var.name_prefix}-*",
     ]
   }
 
@@ -217,7 +217,7 @@ data "aws_iam_policy_document" "schedule" {
       "sagemaker:CreateTrainingJob",
     ]
     resources = [
-      "arn:aws:sagemaker:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:training-job/${var.name_prefix}-*",
+      "arn:aws:sagemaker:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:training-job/${var.name_prefix}-*",
     ]
 
     condition {
@@ -273,7 +273,7 @@ data "aws_iam_policy_document" "schedule" {
       "sagemaker:StopTrainingJob",
     ]
     resources = [
-      "arn:aws:sagemaker:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:training-job/${var.name_prefix}-*",
+      "arn:aws:sagemaker:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:training-job/${var.name_prefix}-*",
     ]
   }
 
