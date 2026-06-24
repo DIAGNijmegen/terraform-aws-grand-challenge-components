@@ -30,8 +30,8 @@ output "registry_url" {
 ############
 # SAGEMAKER
 ############
-output "schedule_policy_document" {
-  value = data.aws_iam_policy_document.schedule
+output "logs_policy_document" {
+  value = data.aws_iam_policy_document.logs
 }
 
 output "schedule_policy_arn" {

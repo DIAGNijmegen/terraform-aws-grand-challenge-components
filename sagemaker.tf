@@ -324,3 +324,43 @@ resource "aws_iam_policy" "schedule" {
   name   = data.aws_iam_policy_document.schedule.policy_id
   policy = data.aws_iam_policy_document.schedule.json
 }
+
+#################
+# IAM - Logs
+#################
+data "aws_iam_policy_document" "logs" {
+  policy_id = "SAGEMAKER_${var.name_prefix}-components_LOGS"
+
+  statement {
+    sid = "GetJobLogs"
+    actions = [
+      "logs:DescribeLogStreams",
+      "logs:GetLogEvents",
+    ]
+    resources = [
+      "arn:aws:logs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:log-group:${local.training_jobs_log_group_name}:log-stream:",
+      "arn:aws:logs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:log-group:${local.training_jobs_log_group_name}:log-stream:${var.name_prefix}-*",
+    ]
+  }
+
+  statement {
+    sid = "ReadSageMakerJobs"
+    actions = [
+      "sagemaker:DescribeTrainingJob",
+    ]
+    resources = [
+      "arn:aws:sagemaker:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:training-job/${var.name_prefix}-*",
+    ]
+  }
+
+  statement {
+    sid = "GetMetricData"
+    actions = [
+      "cloudwatch:GetMetricData",
+    ]
+    resources = [
+      # GetMetricData does not allow resource limitation
+      "*"
+    ]
+  }
+}
