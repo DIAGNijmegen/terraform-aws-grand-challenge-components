@@ -105,7 +105,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "io" {
     }
 
     expiration {
-      days = 1
+      days = 7
     }
 
     status = "Enabled"
