@@ -1,6 +1,6 @@
 variable "repository_names" {
-  type        = set(string)
-  default     = [
+  type = set(string)
+  default = [
     "algorithms/algorithmimage",
     "evaluation/method",
     "workstations/workstationimage",
