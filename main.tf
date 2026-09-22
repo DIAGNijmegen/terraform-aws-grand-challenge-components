@@ -12,6 +12,10 @@ data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
 data "aws_availability_zones" "available" {
+  # checkov:skip=CKV_AWS_394: Subnets are derived from the sorted zone_ids,
+  # so a newly added AZ only appends a new subnet without reshuffling the
+  # existing CIDR assignments. Using all available zones is intentional to
+  # provide multi-AZ coverage.
   state = "available"
 
   filter {

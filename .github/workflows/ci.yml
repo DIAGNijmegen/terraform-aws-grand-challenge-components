@@ -1,0 +1,30 @@
+name: CI
+
+on: [push, pull_request]
+
+permissions:
+    contents: read
+
+env:
+    PYTHON_VERSION: "3.14"
+
+concurrency:
+    group: ${{ github.head_ref || github.run_id }}
+    cancel-in-progress: true
+
+jobs:
+    precommit:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install Python ${{ env.PYTHON_VERSION }}
+              uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+              with:
+                  python-version: ${{ env.PYTHON_VERSION }}
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - name: Install pre-commit
+              run: |
+                  python -m pip install --upgrade pip
+                  python -m pip install pre-commit virtualenv!=20.0.6
+                  pre-commit install
+            - name: Run static code inspections
+              run: pre-commit run --all-files
