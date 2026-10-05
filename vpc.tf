@@ -76,6 +76,15 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private[each.key].id
 }
 
+# Look up the S3 managed prefix list directly rather than relying on
+# aws_vpc_endpoint.s3.cidr_blocks. On first apply the endpoint's cidr_blocks
+# attribute is unknown and can resolve to a different length than planned,
+# producing "Provider produced inconsistent final plan". The managed prefix
+# list is resolvable at plan time, so the number of NACL rules is stable.
+data "aws_prefix_list" "s3" {
+  name = "com.amazonaws.${data.aws_region.current.region}.s3"
+}
+
 resource "aws_network_acl" "private" {
   for_each = local.private_subnet_cidr_blocks
 
@@ -83,7 +92,7 @@ resource "aws_network_acl" "private" {
   subnet_ids = [aws_subnet.private[each.key].id]
 
   dynamic "ingress" {
-    for_each = aws_vpc_endpoint.s3.cidr_blocks
+    for_each = data.aws_prefix_list.s3.cidr_blocks
     content {
       protocol   = "tcp"
       rule_no    = 100 + ingress.key
@@ -95,7 +104,7 @@ resource "aws_network_acl" "private" {
   }
 
   dynamic "egress" {
-    for_each = aws_vpc_endpoint.s3.cidr_blocks
+    for_each = data.aws_prefix_list.s3.cidr_blocks
     content {
       protocol   = "tcp"
       rule_no    = 100 + egress.key
