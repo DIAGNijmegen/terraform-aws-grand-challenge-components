@@ -6,10 +6,10 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.109.1
+    rev: v1.109.3
     hooks:
       - id: terraform_fmt
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: '3.3.20'
+    rev: '3.4.0'
     hooks:
       - id: checkov
